@@ -78,6 +78,9 @@ namespace MultiGuess
             if (String.IsNullOrEmpty(submission))
                 throw new ArgumentException("Player's submission cannot be empty");
 
+            if (submission.Length > _gameWords[0].Length)
+                throw new ArgumentException("Player's submission cannot be longer than game's given words");
+
             var score = GetMatchesScore(FindMatches(submission),submission);
 
             UpdateScores(playerName, score);
