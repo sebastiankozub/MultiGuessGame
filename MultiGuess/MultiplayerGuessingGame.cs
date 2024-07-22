@@ -3,16 +3,16 @@ using System.Text;
 
 namespace MultiGuess
 {
-    internal class MultiplayerGuessingGame
+    internal class MultiplayerGuessingGame : IMultiplayerGuessingGame
     {
         private readonly List<string> _playerNames;
         private readonly List<string> _gameWords;
         private readonly Dictionary<string,string> _gameStrings = new Dictionary<string, string>();
 
-        private readonly VocabularyChecker _vocabularyChecker;
+        private readonly IVocabularyChecker _vocabularyChecker;
         private readonly Dictionary<string, uint> _playersScores = new Dictionary<string, uint>();
 
-        public MultiplayerGuessingGame(List<string> playerNames, List<string> gameWords, VocabularyChecker vocabularyChecker)
+        public MultiplayerGuessingGame(List<string> playerNames, List<string> gameWords, IVocabularyChecker vocabularyChecker)
         {
             _playerNames = playerNames;
             _gameWords = gameWords;
