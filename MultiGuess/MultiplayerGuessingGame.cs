@@ -9,7 +9,6 @@ namespace MultiGuess
         private readonly List<string> _gameWords;
         private readonly Dictionary<string,string> _gameStrings = new Dictionary<string, string>();
 
-
         private readonly VocabularyChecker _vocabularyChecker;
         private readonly Dictionary<string, uint> _playersScores = new Dictionary<string, uint>();
 
