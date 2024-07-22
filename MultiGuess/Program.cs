@@ -17,3 +17,4 @@ foreach (var gameString in game.GetGameStrings())
     Console.WriteLine(gameString);
 
 Console.ReadLine();
+

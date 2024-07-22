@@ -34,7 +34,7 @@ namespace MultiGuess
             }
         }
 
-        internal void InitializeGameWords()
+        public void InitializeGameWords()
         {
             if(_gameWords == null || _gameWords.Count < 1)
                 throw new ArgumentException("Word's count cannot be lower than 1");
@@ -79,6 +79,8 @@ namespace MultiGuess
                 throw new ArgumentException("Player's submission cannot be empty");
 
             var score = GetMatchesScore(FindMatches(submission),submission);
+
+            UpdateScores(playerName, score);
 
             return (int)score;
         }
@@ -132,6 +134,11 @@ namespace MultiGuess
         private void UpdateGameStrings(string matchingSubstring, string word, int index)
         {
             _gameStrings[word] = _gameStrings[word].Replace(_gameStrings[word].Substring(index, matchingSubstring.Length), matchingSubstring);
+        }
+
+        private void UpdateScores(string playerName, uint score)
+        {
+            _playersScores[playerName] += score;
         }
     }
 }
