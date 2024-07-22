@@ -115,8 +115,6 @@ namespace MultiGuess
                 if (index != -1)
                 {
                     score += GetMatchScore(matchingSubstring, _gameStrings[word], index);
-
-                    // update/rewrite gameStrings dictionary
                     UpdateGameStrings(matchingSubstring, word, index);
                 }
             }

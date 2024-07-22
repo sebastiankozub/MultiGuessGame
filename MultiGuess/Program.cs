@@ -11,7 +11,13 @@ foreach (var gameString in game.GetGameStrings())
     Console.WriteLine(gameString);
 
 game.SubmitGuess("bob", "bamp");
-Console.WriteLine("Guessing: bamp");
+Console.WriteLine("bob guessing: bamp");
+
+foreach (var gameString in game.GetGameStrings())
+    Console.WriteLine(gameString);
+
+game.SubmitGuess("steev", "baci");
+Console.WriteLine("steev guessing: baci");
 
 foreach (var gameString in game.GetGameStrings())
     Console.WriteLine(gameString);
