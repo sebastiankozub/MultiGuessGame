@@ -115,7 +115,7 @@ namespace MultiGuess
                     score += GetMatchScore(matchingSubstring, _gameStrings[word], index);
 
                     // update/rewrite gameStrings dictionary
-                    UpdateGameStrings();
+                    UpdateGameStrings(matchingSubstring, word, index);
                 }
             }
 
@@ -129,9 +129,9 @@ namespace MultiGuess
             return score;
         }
 
-        private void UpdateGameStrings()
+        private void UpdateGameStrings(string matchingSubstring, string word, int index)
         {
-
+            _gameStrings[word] = _gameStrings[word].Replace(_gameStrings[word].Substring(index, matchingSubstring.Length), matchingSubstring);
         }
     }
 }
