@@ -1,5 +1,7 @@
-﻿using System.Net;
+﻿using System.Collections.Concurrent;
+using System.Net;
 using System.Text;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace MultiGuess
 {
@@ -10,7 +12,9 @@ namespace MultiGuess
         private readonly Dictionary<string,string> _gameStrings = new Dictionary<string, string>();
 
         private readonly IVocabularyChecker _vocabularyChecker;
-        private readonly Dictionary<string, uint> _playersScores = new Dictionary<string, uint>();
+        private readonly ConcurrentDictionary<string, uint> _playersScores = new ConcurrentDictionary<string, uint>();
+
+        private readonly object _gameStringsLock = new();
 
         public MultiplayerGuessingGame(List<string> playerNames, List<string> gameWords, IVocabularyChecker vocabularyChecker)
         {
@@ -30,7 +34,7 @@ namespace MultiGuess
 
             foreach(var name in _playerNames)
             {
-                _playersScores.Add(name, 0);
+                _playersScores.AddOrUpdate(name, 0, (k,o) => 0);
             }
         }
 
@@ -67,7 +71,10 @@ namespace MultiGuess
 
         public IList<string> GetGameStrings()
         {
-            return _gameStrings.Values.ToList();
+            lock (_gameStringsLock)
+            {
+                return _gameStrings.Values.ToList();
+            }
         }
 
         public int SubmitGuess(string playerName, string submission)
@@ -81,7 +88,12 @@ namespace MultiGuess
             if (submission.Length > _gameWords[0].Length)
                 throw new ArgumentException("Player's submission cannot be longer than game's given words");
 
-            var score = GetMatchesScore(FindMatches(submission),submission);
+            uint score = 0;
+
+            lock (_gameStringsLock)
+            {
+                score = GetMatchesScore(FindMatches(submission), submission);
+            }
 
             UpdateScores(playerName, score);
 
