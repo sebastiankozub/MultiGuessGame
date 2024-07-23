@@ -1,7 +1,11 @@
 ﻿using System.Collections.Concurrent;
-using System.Net;
 using System.Text;
-using static System.Formats.Asn1.AsnWriter;
+
+// make more SOLID classes:
+//
+// ScoresBoard
+// WordsMatcher
+// ScoresCounter
 
 namespace MultiGuess
 {
